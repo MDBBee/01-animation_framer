@@ -1,4 +1,6 @@
 import { useContext } from 'react';
+import { motion } from 'motion/react';
+import { LayoutGroup } from 'motion/react';
 
 import { ChallengesContext } from '../store/challenges-context.jsx';
 
@@ -27,7 +29,7 @@ export default function ChallengeItem({
   }
 
   return (
-    <li>
+    <motion.li layout>
       <article className="challenge-item">
         <header>
           <img {...challenge.image} />
@@ -46,7 +48,12 @@ export default function ChallengeItem({
           <p>
             <button onClick={onViewDetails}>
               View Details{' '}
-              <span className="challenge-item-details-icon">&#9650;</span>
+              <motion.span
+                animate={{ rotate: isExpanded ? 180 : 0 }}
+                className="challenge-item-details-icon"
+              >
+                &#9650;
+              </motion.span>
             </button>
           </p>
 
@@ -59,6 +66,6 @@ export default function ChallengeItem({
           )}
         </div>
       </article>
-    </li>
+    </motion.li>
   );
 }

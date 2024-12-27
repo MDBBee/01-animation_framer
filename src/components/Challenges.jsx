@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { ChallengesContext } from '../store/challenges-context.jsx';
 import ChallengeItem from './ChallengeItem.jsx';
@@ -40,18 +41,23 @@ export default function Challenges() {
         onSelectType={handleSelectType}
         selectedType={selectedType}
       >
-        {displayedChallenges.length > 0 && (
-          <ol className="challenge-items">
-            {displayedChallenges.map((challenge) => (
-              <ChallengeItem
-                key={challenge.id}
-                challenge={challenge}
-                onViewDetails={() => handleViewDetails(challenge.id)}
-                isExpanded={expanded === challenge.id}
-              />
-            ))}
-          </ol>
-        )}
+        <AnimatePresence>
+          {displayedChallenges.length > 0 && (
+            <motion.ol
+              exit={{ opacity: 0, y: -30 }}
+              className="challenge-items"
+            >
+              {displayedChallenges.map((challenge) => (
+                <ChallengeItem
+                  key={challenge.id}
+                  challenge={challenge}
+                  onViewDetails={() => handleViewDetails(challenge.id)}
+                  isExpanded={expanded === challenge.id}
+                />
+              ))}
+            </motion.ol>
+          )}
+        </AnimatePresence>
         {displayedChallenges.length === 0 && <p>No challenges found.</p>}
       </ChallengeTabs>
     </div>
